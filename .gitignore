@@ -1,1 +1,8 @@
 *.beam
+network.beam
+node.beam
+test.beam
+node_functions.beam
+main.beam
+log.txt
+
