@@ -71,7 +71,7 @@ passive(State,H,S,C,PushPull,PeerS) ->
         PushPull ->
           PermutedView = permute(State#state.view),
           View = moveOldest(PermutedView,H),
-          Buffer = lists:append([[0,State#state.pid,State#state.id]], lists:sublist(View, floor(abs(C/2-1)))),
+          Buffer = lists:append([[0,State#state.pid,State#state.id]], lists:sublist(View, round(abs(C/2-1))+1)),
           P ! {pull, Buffer, self()}
       end,
     View_select = select(C,H,S,BufferP,State#state.view,State#state.pid),
@@ -105,7 +105,7 @@ active(State,H,S,C,PushPull,T,PeerS) ->
           end,
           PermutedView = permute(State#state.view),
           View = moveOldest(PermutedView,H),
-          Buffer = lists:append([[0,State#state.pid,State#state.id]],lists:sublist(View, floor(abs(C/2-1)))),
+          Buffer = lists:append([[0,State#state.pid,State#state.id]],lists:sublist(View, round(abs(C/2-1))+1)),
           lists:nth(2,Peer) ! {push,Buffer,self()},
           if
             PushPull ->
